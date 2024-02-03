@@ -14,38 +14,38 @@ docker-compose up -d
 
 ## API ROUTES
 - Login:
-    URL: http://localhost/api/login
+    URL: http://localhost:3001/api/login
     Method: POST
     Description: Endpoint for user authentication.
 
 - Create Task:
-    URL: http://localhost/api/tasks
+    URL: http://localhost:3001/api/tasks
     Method: POST
     Description: Create a new task by publishing task to RabiitMQ.
 
 - Get Tasks:
 
-    URL: http://localhost/api/tasks
+    URL: http://localhost:3001/api/tasks
     Method: GET
     Description: Retrieve all tasks.
 
 - Get Single Task:
-    URL: http://localhost/api/tasks/:taskId
+    URL: http://localhost:3001/api/tasks/:taskId
     Method: GET
     Description: Retrieve a single task by ID.
 
 - Update Single Task:
-    URL: http://localhost/api/tasks/:taskId
+    URL: http://localhost:3001/api/tasks/:taskId
     Method: PUT
     Description: Update a single task by ID.
 
 - Delete Single Task:
-    URL: http://localhost/api/tasks/:taskId
+    URL: http://localhost:3001/api/tasks/:taskId
     Method: DELETE
     Description: Delete a single task by ID.
 
 - Webhooks:
-    URL: http://localhost/webhooks
+    URL: http://localhost:3001/webhooks
     Method: GET
     Description: Receive a published event.
 
