@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const jwt = require('jsonwebtoken');
-const amqp = require('amqplib');
 const winston = require('winston');
 const { createTask, getTasks, getTaskById, updateTask, deleteTask } = require('./controllers/taskController');
 const {login} = require('./controllers/loginController')

@@ -1,5 +1,6 @@
 const Task = require('../models/task');
 const { publishEvent } = require('./webhookController');
+const winston = require('winston');
 
 exports.createTask = async (req, res) => {
   const { title, description } = req.body;
@@ -17,6 +18,7 @@ exports.createTask = async (req, res) => {
 
     res.status(201).json(task);
   } catch (err) {
+    winston.error({"LEVEL":"createTask error","ERROR":err})
     res.status(500).json({ error: 'Error creating task' });
   }
 };
@@ -25,6 +27,7 @@ exports.getTasks = async (req, res) => {
       const tasks = await Task.find();
       res.json(tasks);
     } catch (err) {
+        winston.error({"LEVEL":"getTasks error","ERROR":err})
       res.status(500).json({ error: 'Error fetching tasks' });
     }
   };
@@ -41,6 +44,7 @@ exports.getTasks = async (req, res) => {
   
       res.json(task);
     } catch (err) {
+        winston.error({"LEVEL":"createTask error","ERROR":err})
       res.status(500).json({ error: 'Error fetching task' });
     }
   };
@@ -62,6 +66,7 @@ exports.updateTask = async (req, res) => {
 
     res.json(task);
   } catch (err) {
+    winston.error({"LEVEL":"updateTask error","ERROR":err})
     res.status(500).json({ error: 'Error updating task' });
   }
 };
@@ -82,6 +87,7 @@ exports.deleteTask = async (req, res) => {
 
     res.json({ message: 'Task deleted successfully' });
   } catch (err) {
+    winston.error({"LEVEL":"deleteTask error","ERROR":err})
     res.status(500).json({ error: 'Error deleting task' });
   }
 };

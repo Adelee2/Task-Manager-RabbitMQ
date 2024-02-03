@@ -23,7 +23,7 @@ docker build -t mongodb-image -f Dockerfile.mongodb .
 - Create Task:
     URL: http://localhost:3001/api/tasks
     Method: POST
-    Description: Create a new task by publishing task to RabiitMQ.
+    Description: Create a new task and publishing task to RabitMQ which notifies subscribers. consumer consumes the message
 
 - Get Tasks:
 
@@ -39,17 +39,17 @@ docker build -t mongodb-image -f Dockerfile.mongodb .
 - Update Single Task:
     URL: http://localhost:3001/api/tasks/:taskId
     Method: PUT
-    Description: Update a single task by ID.
+    Description: Update a single task by ID. An event is published which notifies subscribers and consumer consumes the message
 
 - Delete Single Task:
     URL: http://localhost:3001/api/tasks/:taskId
     Method: DELETE
-    Description: Delete a single task by ID.
+    Description: Delete a single task by ID. An event is published which notifies subscribers and consumer consumes the message
 
 - Webhooks:
     URL: http://localhost:3001/webhooks
-    Method: GET
-    Description: Receive a published event.
+    Method: POST
+    Description: Add given webhooks to list of subscribers.
 
 ### Note: 
   - ensure the container name for the rabbitmq and mongodb is the same as the one in app.js
