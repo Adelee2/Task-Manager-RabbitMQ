@@ -6,12 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - '3001:3001'
     depends_on:
       - rabbitmq
       - mongodb
   node-consumer:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile.consumer
     depends_on:
@@ -20,15 +20,15 @@ services:
     image: rabbitmq-image
     restart: always
     ports:
-      - "5672:5672" 
-      - "15672:15672"
+      - '5672:5672'
+      - '15672:15672'
 
   mongodb:
     image: mongodb-image
     restart: always
     ports:
-      - "27017:27017"
+      - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ""
-      MONGO_INITDB_ROOT_PASSWORD: ""
+      MONGO_INITDB_ROOT_USERNAME: ''
+      MONGO_INITDB_ROOT_PASSWORD: ''
       MONGO_INITDB_DATABASE: task_management
