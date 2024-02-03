@@ -10,7 +10,9 @@ docker build -t mongodb-image -f Dockerfile.mongodb .
 
 
 ## Running app
-docker-compose up -d
+ - create a .env file with PORT=3001 and SECRET=`<your jwt secret>`
+ - populate the users document in the mongodb to login `(username and password)`
+ - docker-compose up -d
 
 ## API ROUTES
 - Login:

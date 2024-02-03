@@ -10,9 +10,15 @@ services:
     depends_on:
       - rabbitmq
       - mongodb
-
+  node-consumer:
+    build: 
+      context: .
+      dockerfile: Dockerfile.consumer
+    depends_on:
+      - node-app
   rabbitmq:
     image: rabbitmq-image
+    restart: always
     ports:
       - "5672:5672" 
       - "15672:15672"

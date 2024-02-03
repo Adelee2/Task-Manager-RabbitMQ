@@ -12,9 +12,8 @@ exports.createTask = async (req, res) => {
 
   try {
     await task.save();
-
     // Publish task creation event to RabbitMQ
-    publishEvent(channel, 'TaskCreated', task);
+    publishEvent(req.channel, 'TaskCreated', task);
 
     res.status(201).json(task);
   } catch (err) {
@@ -59,7 +58,7 @@ exports.updateTask = async (req, res) => {
     }
 
     // Publish task update event to RabbitMQ
-    publishEvent(channel, 'TaskUpdated', task);
+    publishEvent(req.channel, 'TaskUpdated', task);
 
     res.json(task);
   } catch (err) {
@@ -79,7 +78,7 @@ exports.deleteTask = async (req, res) => {
     }
 
     // Publish task deletion event to RabbitMQ
-    publishEvent(channel, 'TaskDeleted', task);
+    publishEvent(req.channel, 'TaskDeleted', task);
 
     res.json({ message: 'Task deleted successfully' });
   } catch (err) {

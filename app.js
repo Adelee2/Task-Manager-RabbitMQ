@@ -8,51 +8,22 @@ const { createTask, getTasks, getTaskById, updateTask, deleteTask } = require('.
 const {login} = require('./controllers/loginController')
 const { subscribeWebhook } = require('./controllers/webhookController');
 const authMiddleware = require('./middlewares/authMiddleware');
+const rabbitmqMiddleware = require('./middlewares/rabbitmqMiddleware');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// RabbitMQ setup
-const RABBITMQ_URL = 'amqp://oneport365-rabbitmq-1';
-let channel;
-
-async function setupRabbitMQ() {
-  try {
-    const connection = await amqp.connect(RABBITMQ_URL);
-    const ch = await connection.createChannel();
-
-    const exchange = 'tasks';
-    const queue = 'task_queue';
-
-    await ch.assertExchange(exchange, 'fanout', { durable: false });
-    await ch.assertQueue(queue, { durable: true });
-    await ch.bindQueue(queue, exchange, '');
-
-    console.log('RabbitMQ setup successful');
-    return ch;
-  } catch (err) {
-    console.error('Error setting up RabbitMQ:', err);
-    throw err;
-  }
-}
 mongoose.connect('mongodb://oneport365-mongodb-1/task_management', { useNewUrlParser: true, useUnifiedTopology: true });
-
+app.use(rabbitmqMiddleware);
 // Express middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Setup RabbitMQ and start server
-setupRabbitMQ()
-  .then((ch) => {
-    channel = ch;
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('Exiting application due to RabbitMQ setup error:', err);
-    process.exit(1);
-  })
+
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
+
 //Auth routes
 app.post('/api/login',login);
 // Task routes
