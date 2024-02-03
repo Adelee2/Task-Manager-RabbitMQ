@@ -1,0 +1,4 @@
+FROM rabbitmq:management
+
+# Expose RabbitMQ ports
+EXPOSE 5672 15672
